@@ -5,12 +5,14 @@ class Event:
   def __init__(
     self,
     name : str,
-    causative_factors : List["Event"] = None,
+    apriori_events : List["Event"] = None,
+    posteriori_events : List["Event"] = None,
     prevalence : int = None,
     *args, 
     **kwargs
   ):
     self.name = name
-    self.causative_factors = causative_factors
+    self.apriori_events = apriori_events
+    self.posteriori_events = posteriori_events
     self.prevalence = prevalence
     
