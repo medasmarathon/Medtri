@@ -1,5 +1,7 @@
-import medtri as med
-import numpy as np
+from medtri.medinode import Event
 
-print(med.count())
-print(med.disease.name())
+
+symptom_x = Event("Symptom X", prevalence=90)
+symptom_y = Event("Symptom Y", prevalence=90)
+symptom_z = Event("Symptom Z", prevalence=90)
+disease_A = Event("Disease A")
