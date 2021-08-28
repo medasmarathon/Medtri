@@ -19,8 +19,8 @@ disease_C.has_apriori_factor(symptom_y, 80)
 
 patient = Host("Human", possible_events=[disease_A, disease_B, disease_C])
 
-symptom_x_observation = Observation(symptom_x, True)
-symptom_y_observation = Observation(symptom_y, True)
-symptom_z_observation = Observation(symptom_z, True)
+symptom_x_observation = Observation(symptom_x, is_observed=True, is_present=True)
+symptom_y_observation = Observation(symptom_y, is_observed=True, is_present=True)
+symptom_z_observation = Observation(symptom_z, is_observed=True, is_present=True)
 
-patient_condition = Condition(patient, [symptom_x_observation])
+patient_condition = Condition(patient, [symptom_x_observation, symptom_y_observation])
