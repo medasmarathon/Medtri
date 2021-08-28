@@ -11,6 +11,7 @@ class Condition:
 
   def update_observation(self, observation: Observation, presence: bool = None):
     if presence is not None:
+      observation.is_observed = True
       observation.is_present = presence
     existed_event_observation_index = self.__get_observation_index_for_event(observation.event)
     if existed_event_observation_index == -1:

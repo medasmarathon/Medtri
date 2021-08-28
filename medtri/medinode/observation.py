@@ -29,7 +29,6 @@ class Observation:
 
   def get_presence_probability(self):
     """
-
     Returns:
     --------
         `float`: Return probability percentage. `presence_probability` takes precedence over `is_present` if both inputted
