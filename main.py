@@ -1,3 +1,4 @@
+from medtri.medinode.condition import Condition
 from medtri.medinode import Event, Host, Observation
 
 symptom_x = Event("Symptom X")
@@ -21,3 +22,5 @@ patient = Host("Human", possible_events=[disease_A, disease_B, disease_C])
 symptom_x_observation = Observation(symptom_x, True)
 symptom_y_observation = Observation(symptom_y, True)
 symptom_z_observation = Observation(symptom_z, True)
+
+patient_condition = Condition(patient, [symptom_x_observation])
