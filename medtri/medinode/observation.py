@@ -3,6 +3,9 @@ from .event import Event
 
 
 class Observation:
+  """
+  Observation of an Event
+  """
   def __init__(
       self,
       event: Event,
@@ -10,6 +13,14 @@ class Observation:
       is_present: bool = None,
       presence_probability: float = None
       ) -> None:
+    """Observation of an Event
+
+    Args:
+        event (Event): Required
+        is_observed (bool, optional): Whether the observation has been conducted, and yield result about event. Defaults to False.
+        is_present (bool, optional): The event is observed to be present or not. Defaults to None.
+        presence_probability (float, optional): input probability of the event from other sources. Defaults to None.
+    """
     self.event = event
     self.is_observed = is_observed
     self.is_present = is_present
