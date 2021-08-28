@@ -19,7 +19,7 @@ class Observation:
         event (Event): Required
         is_observed (bool, optional): Whether the observation has been conducted, and yield result about event. Defaults to False.
         is_present (bool, optional): The event is observed to be present or not. Defaults to None.
-        presence_probability (float, optional): input probability of the event from other sources. Defaults to None.
+        presence_probability (float, optional): Input probability (percentage) of the event from other sources. Defaults to None.
     """
     self.event = event
     self.is_observed = is_observed
