@@ -1,4 +1,4 @@
-from medtri.medinode import Event
+from medtri.medinode import Event, Host
 
 symptom_x = Event("Symptom X")
 symptom_y = Event("Symptom Y")
@@ -15,3 +15,5 @@ disease_B.has_apriori_factor(symptom_y, 70)
 disease_C = Event("Disease A", prevalence=30)
 disease_C.has_apriori_factor(symptom_x, 40)
 disease_C.has_apriori_factor(symptom_y, 80)
+
+patient = Host("Human", possible_events=[disease_A, disease_B, disease_C])
