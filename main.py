@@ -1,6 +1,5 @@
 from medtri.medinode import Event
 
-
 symptom_x = Event("Symptom X")
 symptom_y = Event("Symptom Y")
 symptom_z = Event("Symptom Z")
