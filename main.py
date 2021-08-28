@@ -1,4 +1,4 @@
-from medtri.medinode import Event, Host
+from medtri.medinode import Event, Host, Observation
 
 symptom_x = Event("Symptom X")
 symptom_y = Event("Symptom Y")
@@ -17,3 +17,7 @@ disease_C.has_apriori_factor(symptom_x, 40)
 disease_C.has_apriori_factor(symptom_y, 80)
 
 patient = Host("Human", possible_events=[disease_A, disease_B, disease_C])
+
+symptom_x_observation = Observation(symptom_x, True)
+symptom_y_observation = Observation(symptom_y, True)
+symptom_z_observation = Observation(symptom_z, True)
