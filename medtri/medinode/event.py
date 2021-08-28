@@ -8,7 +8,7 @@ class Event:
     name : str,
     apriori_factors : List["Factor"] = [],
     posteriori_factors : List["Factor"] = [],
-    prevalence : int = None,
+    prevalence : int = 0,
     *args, 
     **kwargs
   ):
