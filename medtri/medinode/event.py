@@ -19,7 +19,7 @@ class Event:
     self.prevalence = get_percentage_value(prevalence)
 
   def has_apriori_event(self, apriori_event: "Event", apriori_prevalence: float) -> "Event":
-    existed_apriori_event_index = self.__get_apriori_factor_index_for_event(apriori_event)
+    existed_apriori_event_index = self.__get_apriori_index_for_event(apriori_event)
     if existed_apriori_event_index == -1:
       # If not exist factor for event, create new
       dependent_event = Event(apriori_event.name, prevalence=apriori_prevalence)
@@ -30,24 +30,24 @@ class Event:
     return self
 
   def remove_apriori_factor_of_event(self, event: "Event"):
-    existed_apriori_event_index = self.__get_apriori_factor_index_for_event(event)
+    existed_apriori_event_index = self.__get_apriori_index_for_event(event)
     if existed_apriori_event_index != -1:
       # Current observations not include this event
       self.apriori_events.pop(existed_apriori_event_index)
 
   def remove_outcome_factor_of_event(self, event: "Event"):
-    existed_outcome_event_index = self.__get_outcome_factor_index_for_event(event)
+    existed_outcome_event_index = self.__get_outcome_index_for_event(event)
     if existed_outcome_event_index != -1:
       # Current observations not include this event
       self.apriori_events.pop(existed_outcome_event_index)
 
-  def __get_apriori_factor_index_for_event(self, event: "Event") -> int:
+  def __get_apriori_index_for_event(self, event: "Event") -> int:
     for index, eve in enumerate(self.apriori_events):
       if event == eve.name:
         return index
     return -1
 
-  def __get_outcome_factor_index_for_event(self, event: "Event") -> int:
+  def __get_outcome_index_for_event(self, event: "Event") -> int:
     for index, eve in enumerate(self.outcome_events):
       if event == eve.name:
         return index
