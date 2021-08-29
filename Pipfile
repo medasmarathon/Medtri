@@ -4,11 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-numpy = "*"
 pandas = "*"
 
 [dev-packages]
 yapf = "*"
+medtri = {editable = true, path = "."}
 
 [requires]
 python_version = "3.8"

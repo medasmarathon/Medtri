@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ed35183e87f44cca31625fd47d1564b0c2ce783d2a9ce6020010d24338c4c287"
+            "sha256": "1c33d66cc71a99f387b562ebc13ec2999e855a3cb28ca88b8040a59c91feb77e"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -49,7 +49,7 @@
                 "sha256:f545c082eeb09ae678dd451a1b1dbf17babd8a0d7adea02897a76e639afca310",
                 "sha256:fde50062d67d805bc96f1a9ecc0d37bfc2a8f02b937d2c50824d186aa91f2419"
             ],
-            "index": "pypi",
+            "markers": "python_version < '3.11' and python_version >= '3.7'",
             "version": "==1.21.2"
         },
         "pandas": {
@@ -102,6 +102,10 @@
         }
     },
     "develop": {
+        "medtri": {
+            "editable": true,
+            "path": "."
+        },
         "yapf": {
             "hashes": [
                 "sha256:408fb9a2b254c302f49db83c59f9aa0b4b0fd0ec25be3a5c51181327922ff63d",
