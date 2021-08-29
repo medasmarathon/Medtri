@@ -7,15 +7,15 @@ class Event:
   def __init__(
       self,
       name: str,
-      apriori_events: List["Event"] = [],
-      outcome_events: List["Event"] = [],
+      apriori_events: List["Event"] = None,
+      outcome_events: List["Event"] = None,
       prevalence: float = 0,
       *args,
       **kwargs
       ):
     self.name = name
-    self.apriori_events = apriori_events
-    self.outcome_events = outcome_events
+    self.apriori_events = [] if apriori_events is None else apriori_events
+    self.outcome_events = [] if outcome_events is None else outcome_events
     self.prevalence = get_percentage_value(prevalence)
 
   def has_apriori_event(self, apriori_event: "Event", apriori_prevalence: float) -> "Event":
@@ -57,7 +57,7 @@ class Event:
     if self.name == event.name or event.is_apriori_of(self):
       return True
     for outcome_event in event.outcome_events:
-      if self.is_outcome_of(outcome_event) or outcome_event.is_apriori_of(self):
+      if self.is_outcome_of(outcome_event):
         return True
     return False
 
@@ -65,6 +65,6 @@ class Event:
     if self.name == event.name or event.is_outcome_of(self):
       return True
     for apriori_event in event.apriori_events:
-      if self.is_apriori_of(apriori_event) or apriori_event.is_outcome_of(self):
+      if self.is_apriori_of(apriori_event):
         return True
     return False
