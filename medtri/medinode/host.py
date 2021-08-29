@@ -10,7 +10,7 @@ class Host:
 
   def is_event_possible(self, event: Event):
     for e in self.possible_events:
-      if e.is_apriori_of(event):
+      if event.is_outcome_of(e):     # is equivalent to e.is_apriori_of(event)
         return True
     return False
 
