@@ -1,4 +1,5 @@
-from medtri.medinode import Condition, BaseEvent, observation
+from medtri.medinode.event.baseevent import BaseEvent
+from medtri.medinode import Condition
 
 
 def calculate_event_probability(condition: Condition, event: BaseEvent):
