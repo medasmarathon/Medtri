@@ -54,17 +54,33 @@ class Event:
     return -1
 
   def is_outcome_of(self, event: "Event"):
-    if self.name == event.name or event.is_apriori_of(self):
+    """
+    Return:
+    -------
+        True if `event` has any related outcomes as `self` or `event` is an apriori to `self`
+    """
+    if self.name == event.name:
       return True
-    for outcome_event in event.outcome_events:
-      if self.is_outcome_of(outcome_event):
+    for event_outcome in event.outcome_events:
+      if self.is_outcome_of(event_outcome):
+        return True
+    for self_apriori in self.apriori_events:
+      if event.is_apriori_of(self_apriori):
         return True
     return False
 
   def is_apriori_of(self, event: "Event"):
-    if self.name == event.name or event.is_outcome_of(self):
+    """
+    Return:
+    -------
+        True if `self` is an apriori to `event` or `self` has any related outcomes as `event`
+    """
+    if self.name == event.name:
       return True
-    for apriori_event in event.apriori_events:
-      if self.is_apriori_of(apriori_event):
+    for event_apriori in event.apriori_events:
+      if self.is_apriori_of(event_apriori):
+        return True
+    for self_outcome in self.outcome_events:
+      if event.is_outcome_of(self_outcome):
         return True
     return False
