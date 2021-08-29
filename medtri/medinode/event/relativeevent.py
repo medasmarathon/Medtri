@@ -1,7 +1,7 @@
 from medtri.medinode.host import Host
 from typing import List
 from ..event import BaseEvent
-from medtri.medinode import Observation
+import medtri.medinode.observation as obs
 from copy import deepcopy
 
 
@@ -12,7 +12,7 @@ class RelativeEvent(BaseEvent):
       apriori_events: List[BaseEvent] = None,
       outcome_events: List[BaseEvent] = None,
       prevalence: float = 0,
-      observations: List[Observation] = None,
+      observations: List[obs.Observation] = None,
       hosts: List[Host] = None
       ):
     super().__init__(name, apriori_events, outcome_events, prevalence)
@@ -27,7 +27,7 @@ class RelativeEvent(BaseEvent):
           apriori_event.name,
           prevalence=dependent_prevalence,
           hosts=self.hosts,
-          observations=self.observations.append(Observation(deepcopy(self), True, True))
+          observations=self.observations.append(obs.Observation(self, True, True))
           )
       self.apriori_events.append(dependent_event)
     else:
