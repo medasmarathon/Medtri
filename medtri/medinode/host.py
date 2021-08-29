@@ -10,12 +10,8 @@ class Host:
 
   def is_event_possible(self, event: Event):
     for e in self.possible_events:
-      if e is event:
+      if e.is_apriori_of(event):
         return True
-      else:
-        for event in e.outcome_events:
-          if e is event:
-            return True
     return False
 
   def event_probabilities_with_observation(self, observation: Observation):
