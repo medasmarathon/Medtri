@@ -1,18 +1,18 @@
-from medtri.medinode import Event, Host, Observation, Condition
+from medtri.medinode import BaseEvent, Host, Observation, Condition
 
-symptom_x = Event("Symptom X")
-symptom_y = Event("Symptom Y")
-symptom_z = Event("Symptom Z")
+symptom_x = BaseEvent("Symptom X")
+symptom_y = BaseEvent("Symptom Y")
+symptom_z = BaseEvent("Symptom Z")
 
-disease_A = Event("Disease A", prevalence=10)
+disease_A = BaseEvent("Disease A", prevalence=10)
 disease_A.has_apriori_event(symptom_x, 90)
 disease_A.has_apriori_event(symptom_y, 20)
 
-disease_B = Event("Disease B", prevalence=40)
+disease_B = BaseEvent("Disease B", prevalence=40)
 disease_B.has_apriori_event(symptom_x, 60)
 disease_B.has_apriori_event(symptom_y, 70)
 
-disease_C = Event("Disease C", prevalence=30)
+disease_C = BaseEvent("Disease C", prevalence=30)
 disease_C.has_apriori_event(symptom_x, 40)
 disease_C.has_apriori_event(symptom_y, 80)
 

@@ -1,4 +1,4 @@
-from medtri.medinode.event import Event
+from medtri.medinode.baseevent import BaseEvent
 from medtri.medinode.host import Host
 from medtri.medinode.observation import Observation
 from typing import List
@@ -16,7 +16,7 @@ class Condition:
         observed_observations.append(obs)
     return observed_observations
 
-  def has_observation_for_event(self, event: Event, presence: bool):
+  def has_observation_for_event(self, event: BaseEvent, presence: bool):
     self.update_observation(Observation(event), presence)
 
   def update_observation(self, observation: Observation, presence: bool = None):
@@ -31,7 +31,7 @@ class Condition:
       # Replace old observation with new one
       self.observations[existed_event_observation_index] = observation
 
-  def __get_observation_index_for_event(self, event: Event) -> int:
+  def __get_observation_index_for_event(self, event: BaseEvent) -> int:
     for index, obs in enumerate(self.observations):
       if event is obs.event:
         return index

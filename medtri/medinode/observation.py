@@ -1,5 +1,5 @@
 from medtri.medinode.constraints import get_percentage_value
-from .event import Event
+from .baseevent import BaseEvent
 
 
 class Observation:
@@ -8,7 +8,7 @@ class Observation:
   """
   def __init__(
       self,
-      event: Event,
+      event: BaseEvent,
       is_observed: bool = False,
       is_present: bool = None,
       presence_probability: float = None

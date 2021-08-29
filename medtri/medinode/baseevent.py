@@ -3,12 +3,12 @@ from typing import List
 from copy import copy, deepcopy
 
 
-class Event:
+class BaseEvent:
   def __init__(
       self,
       name: str,
-      apriori_events: List["Event"] = None,
-      outcome_events: List["Event"] = None,
+      apriori_events: List["BaseEvent"] = None,
+      outcome_events: List["BaseEvent"] = None,
       prevalence: float = 0
       ):
     self.name = name
@@ -16,42 +16,42 @@ class Event:
     self.outcome_events = outcome_events if outcome_events is not None else []
     self.prevalence = get_percentage_value(prevalence)
 
-  def has_apriori_event(self, apriori_event: "Event", apriori_prevalence: float) -> "Event":
+  def has_apriori_event(self, apriori_event: "BaseEvent", apriori_prevalence: float) -> "BaseEvent":
     existed_apriori_event_index = self.__get_apriori_index_for_event(apriori_event)
     if existed_apriori_event_index == -1:
       # If not exist factor for event, create new
-      dependent_event = Event(apriori_event.name, prevalence=apriori_prevalence)
+      dependent_event = BaseEvent(apriori_event.name, prevalence=apriori_prevalence)
       self.apriori_events.append(dependent_event)
     else:
       # Else update prevalence
       self.apriori_events[existed_apriori_event_index].prevalence = apriori_prevalence
     return self
 
-  def remove_apriori_factor_of_event(self, event: "Event"):
+  def remove_apriori_factor_of_event(self, event: "BaseEvent"):
     existed_apriori_event_index = self.__get_apriori_index_for_event(event)
     if existed_apriori_event_index != -1:
       # Current observations not include this event
       self.apriori_events.pop(existed_apriori_event_index)
 
-  def remove_outcome_factor_of_event(self, event: "Event"):
+  def remove_outcome_factor_of_event(self, event: "BaseEvent"):
     existed_outcome_event_index = self.__get_outcome_index_for_event(event)
     if existed_outcome_event_index != -1:
       # Current observations not include this event
       self.apriori_events.pop(existed_outcome_event_index)
 
-  def __get_apriori_index_for_event(self, event: "Event") -> int:
+  def __get_apriori_index_for_event(self, event: "BaseEvent") -> int:
     for index, eve in enumerate(self.apriori_events):
       if event == eve.name:
         return index
     return -1
 
-  def __get_outcome_index_for_event(self, event: "Event") -> int:
+  def __get_outcome_index_for_event(self, event: "BaseEvent") -> int:
     for index, eve in enumerate(self.outcome_events):
       if event == eve.name:
         return index
     return -1
 
-  def is_outcome_of(self, event: "Event"):
+  def is_outcome_of(self, event: "BaseEvent"):
     """
     Return:
     -------
@@ -67,7 +67,7 @@ class Event:
         return True
     return False
 
-  def is_apriori_of(self, event: "Event"):
+  def is_apriori_of(self, event: "BaseEvent"):
     """
     Return:
     -------
