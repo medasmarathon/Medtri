@@ -9,6 +9,9 @@ class Condition:
     self.host = host
     self.observations = observations
 
+  def has_observation_for_event(self, event: Event, presence: bool):
+    self.update_observation(Observation(event), presence)
+
   def update_observation(self, observation: Observation, presence: bool = None):
     if presence is not None:
       observation.is_observed = True
