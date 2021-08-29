@@ -19,9 +19,31 @@ class Event:
     self.posteriori_factors = posteriori_factors
     self.prevalence = percentage_value(prevalence)
 
-  def has_apriori_factor(
-      self, factor_event: "Event", factor_prevalence: float
-      ) -> "Event":
+  def has_apriori_factor(self, factor_event: "Event", factor_prevalence: float) -> "Event":
     factor = Factor(factor_event, factor_prevalence)
     self.apriori_factors.append(factor)
     return self
+
+  def remove_apriori_factor(self, factor: Factor):
+    existed_apriori_factor_index = self.__get_apriori_factor_index_for_event(factor.event)
+    if existed_apriori_factor_index != -1:
+      # Current observations not include this event
+      self.apriori_factors.pop(existed_apriori_factor_index)
+
+  def remove_posteriori_factor(self, factor: Factor):
+    existed_posteriori_factor_index = self.__get_posteriori_factor_index_for_event(factor.event)
+    if existed_posteriori_factor_index != -1:
+      # Current observations not include this event
+      self.apriori_factors.pop(existed_posteriori_factor_index)
+
+  def __get_apriori_factor_index_for_event(self, event: "Event") -> int:
+    for index, factor in enumerate(self.apriori_factors):
+      if event is factor.event:
+        return index
+    return -1
+
+  def __get_posteriori_factor_index_for_event(self, event: "Event") -> int:
+    for index, factor in enumerate(self.posteriori_factors):
+      if event is factor.event:
+        return index
+    return -1
