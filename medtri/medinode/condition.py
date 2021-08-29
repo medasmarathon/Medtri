@@ -1,6 +1,6 @@
-from medtri.medinode.baseevent import BaseEvent
 from medtri.medinode.host import Host
 from medtri.medinode.observation import Observation
+from medtri.medinode.event import BaseEvent
 from typing import List
 
 

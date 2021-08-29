@@ -1,3 +1,4 @@
+from medtri.medinode.calculations.prognosis import calculate_event_probability
 from medtri.medinode import Host, Observation, Condition, BaseEvent
 
 symptom_x = BaseEvent("Symptom X")
@@ -16,12 +17,13 @@ disease_C = BaseEvent("Disease C", prevalence=30)
 disease_C.has_apriori_event(symptom_x, 40)
 disease_C.has_apriori_event(symptom_y, 80)
 
-patient = Host("Human", possible_events=[disease_A, disease_B, disease_C])
+patient = Host("Human", possible_events=[disease_A, disease_B])
 
 symptom_x_observation = Observation(symptom_x, is_observed=True, is_present=True)
 symptom_y_observation = Observation(symptom_y, is_observed=True, is_present=True)
 symptom_z_observation = Observation(symptom_z, is_observed=True, is_present=True)
 
-patient_condition = Condition(patient, [symptom_x_observation])
+patient_condition = Condition(patient, [])
 
 print(disease_A.is_outcome_of(symptom_x))
+print(calculate_event_probability(patient_condition, disease_A))

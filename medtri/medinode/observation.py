@@ -1,5 +1,5 @@
 from medtri.medinode.constraints import get_percentage_value
-from .baseevent import BaseEvent
+from .event import BaseEvent
 
 
 class Observation:
