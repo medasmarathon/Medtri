@@ -1,3 +1,4 @@
+from medtri.medinode.observation import Observation
 from typing import List
 from medtri.medinode.event import Event
 
@@ -11,4 +12,12 @@ class Host:
     for e in self.possible_events:
       if e is event:
         return True
+      else:
+        for event in e.outcome_events:
+          if e is event:
+            return True
     return False
+
+  def event_probabilities_with_observation(self, observation: Observation):
+    if not self.is_event_possible(observation.event):
+      return list(zip(self.possible_events, []))

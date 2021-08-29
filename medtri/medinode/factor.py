@@ -1,4 +1,4 @@
-from .event import Event
+from medtri.medinode import Event
 from .constraints import get_percentage_value
 
 
