@@ -1,4 +1,4 @@
-from medtri.medinode.constraints.datatype import percentage_value
+from medtri.medinode.constraints import get_percentage_value
 from typing import List
 from copy import copy, deepcopy
 from .factor import Factor
@@ -17,7 +17,7 @@ class Event:
     self.name = name
     self.apriori_factors = apriori_factors
     self.outcome_factors = outcome_factors
-    self.prevalence = percentage_value(prevalence)
+    self.prevalence = get_percentage_value(prevalence)
 
   def has_apriori_factor(self, factor_event: "Event", factor_prevalence: float) -> "Event":
     existed_apriori_factor_index = self.__get_apriori_factor_index_for_event(factor_event)
