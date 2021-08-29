@@ -22,20 +22,22 @@ class Event:
   def has_apriori_factor(self, factor_event: "Event", factor_prevalence: float) -> "Event":
     existed_apriori_factor_index = self.__get_apriori_factor_index_for_event(factor_event)
     if existed_apriori_factor_index == -1:
+      # If not exist factor for event, create new
       factor = Factor(factor_event, factor_prevalence)
       self.apriori_factors.append(factor)
     else:
+      # Else update prevalence
       self.apriori_factors[existed_apriori_factor_index].prevalence = factor_prevalence
     return self
 
-  def remove_apriori_factor(self, factor: Factor):
-    existed_apriori_factor_index = self.__get_apriori_factor_index_for_event(factor.event)
+  def remove_apriori_factor_of_event(self, event: "Event"):
+    existed_apriori_factor_index = self.__get_apriori_factor_index_for_event(event)
     if existed_apriori_factor_index != -1:
       # Current observations not include this event
       self.apriori_factors.pop(existed_apriori_factor_index)
 
-  def remove_posteriori_factor(self, factor: Factor):
-    existed_outcome_factor_index = self.__get_outcome_factor_index_for_event(factor.event)
+  def remove_outcome_factor_of_event(self, event: "Event"):
+    existed_outcome_factor_index = self.__get_outcome_factor_index_for_event(event)
     if existed_outcome_factor_index != -1:
       # Current observations not include this event
       self.apriori_factors.pop(existed_outcome_factor_index)
