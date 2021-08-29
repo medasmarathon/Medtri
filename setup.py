@@ -1,9 +1,9 @@
-import setuptools
+from setuptools import setup, find_packages
 
 with open("README.md", "r", encoding="utf-8") as fh:
   long_description = fh.read()
 
-setuptools.setup(
+setup(
     name="medtri",
     version="0.0.1",
     author="Duc Dang",
@@ -21,6 +21,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
         ],
     package_dir={"": "medtri"},
-    packages=setuptools.find_packages(where="medtri"),
+    packages=find_packages(where="medtri"),
     python_requires=">=3.6",
     )
