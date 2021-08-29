@@ -4,6 +4,8 @@ from copy import copy, deepcopy
 
 
 class BaseEvent:
+  """ Event with prevalence and no observation taken into account
+  """
   def __init__(
       self,
       name: str,
