@@ -9,13 +9,11 @@ class Event:
       name: str,
       apriori_events: List["Event"] = None,
       outcome_events: List["Event"] = None,
-      prevalence: float = 0,
-      *args,
-      **kwargs
+      prevalence: float = 0
       ):
     self.name = name
-    self.apriori_events = [] if apriori_events is None else apriori_events
-    self.outcome_events = [] if outcome_events is None else outcome_events
+    self.apriori_events = apriori_events if apriori_events is not None else []
+    self.outcome_events = outcome_events if outcome_events is not None else []
     self.prevalence = get_percentage_value(prevalence)
 
   def has_apriori_event(self, apriori_event: "Event", apriori_prevalence: float) -> "Event":
