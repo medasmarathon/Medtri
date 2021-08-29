@@ -1,4 +1,4 @@
-from .baseevent import BaseEvent
+from .event import BaseEvent
 from .factor import Factor
 from .host import Host
 from .observation import Observation

@@ -1,4 +1,4 @@
-from medtri.medinode import BaseEvent, Host, Observation, Condition
+from medtri.medinode import Host, Observation, Condition, BaseEvent
 
 symptom_x = BaseEvent("Symptom X")
 symptom_y = BaseEvent("Symptom Y")
