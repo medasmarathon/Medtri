@@ -27,3 +27,4 @@ symptom_z_observation = Observation(symptom_z, is_observed=True, is_present=True
 patient_condition = Condition(patient, [symptom_x_observation])
 
 print(disease_A.is_outcome_of(symptom_x))
+calculate_event_probability(patient_condition, disease_A)

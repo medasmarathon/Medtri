@@ -6,6 +6,8 @@ from copy import deepcopy
 
 
 class RelativeEvent(BaseEvent):
+  """Relative event has prevalence probability with conducted observations
+  """
   def __init__(
       self,
       name: str,
@@ -19,7 +21,7 @@ class RelativeEvent(BaseEvent):
     self.observations = observations if observations is not None else []
     self.hosts = hosts if hosts is not None else []
 
-  def has_apriori_event(self, apriori_event: BaseEvent, dependent_prevalence: float) -> "BaseEvent":
+  def has_apriori_event(self, apriori_event: BaseEvent, dependent_prevalence: float) -> BaseEvent:
     existed_apriori_event_index = self._get_apriori_event_index(apriori_event)
     if existed_apriori_event_index == -1:
       # If not exist this event, create new
@@ -27,7 +29,7 @@ class RelativeEvent(BaseEvent):
           apriori_event.name,
           prevalence=dependent_prevalence,
           hosts=self.hosts,
-          observations=self.observations.append(obs.Observation(self, True, True))
+          observations=self.observations.append(obs.Observation(self, True))
           )
       self.apriori_events.append(dependent_event)
     else:

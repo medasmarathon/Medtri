@@ -18,19 +18,6 @@ class BaseEvent:
     self.outcome_events = outcome_events if outcome_events is not None else []
     self.prevalence = get_percentage_value(prevalence)
 
-  def has_apriori_event(
-      self, apriori_event: "BaseEvent", dependent_prevalence: float
-      ) -> "BaseEvent":
-    existed_apriori_event_index = self._get_apriori_event_index(apriori_event)
-    if existed_apriori_event_index == -1:
-      # If not exist factor for event, create new
-      dependent_event = BaseEvent(apriori_event.name, prevalence=dependent_prevalence)
-      self.apriori_events.append(dependent_event)
-    else:
-      # Else update prevalence
-      self.apriori_events[existed_apriori_event_index].prevalence = dependent_prevalence
-    return self
-
   def remove_apriori_event(self, event: "BaseEvent"):
     existed_apriori_event_index = self._get_apriori_event_index(event)
     if existed_apriori_event_index != -1:
@@ -49,7 +36,7 @@ class BaseEvent:
 
   def _get_apriori_event_index(self, event: "BaseEvent") -> int:
     for index, eve in enumerate(self.apriori_events):
-      if event == eve.name:
+      if event == eve:
         return index
     return -1
 
@@ -59,7 +46,7 @@ class BaseEvent:
 
   def _get_outcome_event_index(self, event: "BaseEvent") -> int:
     for index, eve in enumerate(self.outcome_events):
-      if event == eve.name:
+      if event == eve:
         return index
     return -1
 
@@ -69,7 +56,7 @@ class BaseEvent:
     -------
         True if `event` has any related outcomes as `self` or `event` is an apriori to `self`
     """
-    if self.name == event.name:
+    if self == event:
       return True
     for event_outcome in event.outcome_events:
       if self.is_outcome_of(event_outcome):
@@ -85,7 +72,7 @@ class BaseEvent:
     -------
         True if `self` is an apriori to `event` or `self` has any related outcomes as `event`
     """
-    if self.name == event.name:
+    if self == event:
       return True
     for event_apriori in event.apriori_events:
       if self.is_apriori_of(event_apriori):
@@ -94,3 +81,9 @@ class BaseEvent:
       if event.is_outcome_of(self_outcome):
         return True
     return False
+
+  def __eq__(self, o: object) -> bool:
+    if isinstance(o, BaseEvent):
+      return self.name == o.name
+    else:
+      raise TypeError("Compare event with different type object")
