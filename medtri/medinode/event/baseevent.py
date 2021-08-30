@@ -49,7 +49,7 @@ class BaseEvent:
 
   def _get_apriori_event_index(self, event: "BaseEvent") -> int:
     for index, eve in enumerate(self.apriori_events):
-      if event == eve.name:
+      if event == eve:
         return index
     return -1
 
@@ -59,7 +59,7 @@ class BaseEvent:
 
   def _get_outcome_event_index(self, event: "BaseEvent") -> int:
     for index, eve in enumerate(self.outcome_events):
-      if event == eve.name:
+      if event == eve:
         return index
     return -1
 
@@ -69,7 +69,7 @@ class BaseEvent:
     -------
         True if `event` has any related outcomes as `self` or `event` is an apriori to `self`
     """
-    if self.name == event.name:
+    if self == event:
       return True
     for event_outcome in event.outcome_events:
       if self.is_outcome_of(event_outcome):
@@ -85,7 +85,7 @@ class BaseEvent:
     -------
         True if `self` is an apriori to `event` or `self` has any related outcomes as `event`
     """
-    if self.name == event.name:
+    if self == event:
       return True
     for event_apriori in event.apriori_events:
       if self.is_apriori_of(event_apriori):
@@ -94,3 +94,6 @@ class BaseEvent:
       if event.is_outcome_of(self_outcome):
         return True
     return False
+
+  def __eq__(self, event: "BaseEvent") -> bool:
+    return self.name == event.name
