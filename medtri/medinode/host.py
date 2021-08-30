@@ -9,7 +9,7 @@ class Host:
     self.name = name
     self.possible_events = possible_events
 
-  def get_all_possible_outcomes_from(self, event: RelativeEvent):
+  def get_all_possible_outcomes_of(self, event: RelativeEvent):
     outcome_events = []
     for e in self.possible_events:
       if e.is_outcome_of(event):
