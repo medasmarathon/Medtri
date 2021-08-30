@@ -1,12 +1,20 @@
+from medtri.medinode.event.baseevent import BaseEvent
+from medtri.medinode.event.relativeevent import RelativeEvent
 from medtri.medinode.observation import Observation
 from typing import List
-from medtri.medinode.event import BaseEvent
 
 
 class Host:
-  def __init__(self, name: str, possible_events: List[BaseEvent] = []) -> None:
+  def __init__(self, name: str, possible_events: List[RelativeEvent] = []) -> None:
     self.name = name
     self.possible_events = possible_events
+
+  def get_all_possible_outcomes_from(self, event: RelativeEvent):
+    outcome_events = []
+    for e in self.possible_events:
+      if e.is_outcome_of(event):
+        outcome_events.append(e)
+    return outcome_events
 
   def is_event_possible(self, event: BaseEvent):
     for e in self.possible_events:
