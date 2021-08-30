@@ -1,3 +1,4 @@
+from medtri.constants.constants import incorrect_type_comparison
 from medtri.medinode.constraints import get_percentage_value
 from .event import BaseEvent
 
@@ -40,3 +41,11 @@ class Observation:
     if self.is_present is not None:
       return 100 if self.is_present else 0
     return self.presence_probability
+
+  def __eq__(self, o: object) -> bool:
+    if isinstance(o, Observation):
+      return (
+          self.event == o.event and self.get_presence_probability() == o.get_presence_probability()
+          )
+    else:
+      raise TypeError(incorrect_type_comparison(Observation.__name__))
