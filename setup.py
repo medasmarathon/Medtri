@@ -20,7 +20,6 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         ],
-    package_dir={"": "medtri"},
-    packages=find_packages(where="medtri"),
+    packages=find_packages(exclude=['example*']),
     python_requires=">=3.6",
     )
