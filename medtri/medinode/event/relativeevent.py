@@ -6,6 +6,8 @@ from copy import deepcopy
 
 
 class RelativeEvent(BaseEvent):
+  """Relative event has prevalence probability with conducted observations
+  """
   def __init__(
       self,
       name: str,
@@ -27,7 +29,7 @@ class RelativeEvent(BaseEvent):
           apriori_event.name,
           prevalence=dependent_prevalence,
           hosts=self.hosts,
-          observations=self.observations.append(obs.Observation(self, True, True))
+          observations=self.observations.append(obs.Observation(self, True))
           )
       self.apriori_events.append(dependent_event)
     else:

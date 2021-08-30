@@ -18,19 +18,6 @@ class BaseEvent:
     self.outcome_events = outcome_events if outcome_events is not None else []
     self.prevalence = get_percentage_value(prevalence)
 
-  def has_apriori_event(
-      self, apriori_event: "BaseEvent", dependent_prevalence: float
-      ) -> "BaseEvent":
-    existed_apriori_event_index = self._get_apriori_event_index(apriori_event)
-    if existed_apriori_event_index == -1:
-      # If not exist factor for event, create new
-      dependent_event = BaseEvent(apriori_event.name, prevalence=dependent_prevalence)
-      self.apriori_events.append(dependent_event)
-    else:
-      # Else update prevalence
-      self.apriori_events[existed_apriori_event_index].prevalence = dependent_prevalence
-    return self
-
   def remove_apriori_event(self, event: "BaseEvent"):
     existed_apriori_event_index = self._get_apriori_event_index(event)
     if existed_apriori_event_index != -1:
