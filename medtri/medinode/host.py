@@ -1,4 +1,3 @@
-from medtri.medinode.condition import Condition
 from medtri.medinode.event.baseevent import BaseEvent
 from medtri.medinode.event.relativeevent import RelativeEvent
 from medtri.medinode.observation import Observation
@@ -26,11 +25,3 @@ class Host:
   def event_probabilities_with_observation(self, observation: Observation):
     if not self.is_event_possible(observation.event):
       return list(zip(self.possible_events, []))
-
-  def __or__(self, o: object):
-    if isinstance(o, Observation):
-      return Condition(self, observations=[o])
-    if isinstance(o, List) and all(isinstance(item, Observation) for item in o):
-      return Condition(self, observations=o)
-    else:
-      raise TypeError(f"Condition illegally created with type {type(o)}")
