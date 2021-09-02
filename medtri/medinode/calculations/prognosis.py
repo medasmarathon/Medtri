@@ -1,8 +1,8 @@
-from medtri.medinode.event.baseevent import BaseEvent
+from medtri.medinode.inode import IEvent
 from medtri.medinode import Condition
 
 
-def calculate_event_probability(condition: Condition, event: BaseEvent):
+def calculate_event_probability(condition: Condition, event: IEvent):
   if not condition.host.is_event_possible(event):
     return 0
 

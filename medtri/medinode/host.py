@@ -1,22 +1,21 @@
-from medtri.medinode.event.baseevent import BaseEvent
-from medtri.medinode.event.relativeevent import RelativeEvent
+from medtri.medinode.inode import IEvent
 from medtri.medinode.observation import Observation
 from typing import List
 
 
 class Host:
-  def __init__(self, name: str, possible_events: List[RelativeEvent] = []) -> None:
+  def __init__(self, name: str, possible_events: List[IEvent] = []) -> None:
     self.name = name
     self.possible_events = possible_events
 
-  def get_all_possible_outcomes_of(self, event: RelativeEvent):
+  def get_all_possible_outcomes_of(self, event: IEvent):
     outcome_events = []
     for e in self.possible_events:
       if e.is_outcome_of(event):
         outcome_events.append(e)
     return outcome_events
 
-  def is_event_possible(self, event: BaseEvent):
+  def is_event_possible(self, event: IEvent):
     for e in self.possible_events:
       if event.is_outcome_of(e):     # is equivalent to e.is_apriori_of(event)
         return True

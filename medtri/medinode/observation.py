@@ -1,9 +1,9 @@
+from medtri.medinode.inode import IObservation
 from medtri.constants.constants import incorrect_type_comparison
-from medtri.medinode.constraints import get_percentage_value
 from .event import BaseEvent
 
 
-class Observation:
+class Observation(IObservation):
   """
   Observation of an Event
   """
@@ -26,7 +26,7 @@ class Observation:
     self.event = event
     self.is_observed = is_observed
     self.is_present = is_present
-    self.presence_probability = get_percentage_value(presence_probability)
+    self.presence_probability = presence_probability
 
   def get_presence_probability(self):
     """
