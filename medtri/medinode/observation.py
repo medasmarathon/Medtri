@@ -39,7 +39,7 @@ class Observation:
     if self.presence_probability is None and self.is_present is None:
       return None
     if self.is_present is not None:
-      return 100 if self.is_present else 0
+      return 1 if self.is_present else 0
     return self.presence_probability
 
   def __eq__(self, o: object) -> bool:

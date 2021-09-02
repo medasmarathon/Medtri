@@ -6,17 +6,17 @@ symptom_x = Event("Symptom X")
 symptom_y = Event("Symptom Y")
 symptom_z = Event("Symptom Z")
 
-disease_A = Event("Disease A", prevalence=10)
-disease_A.has_apriori_event(symptom_x, 90)
-disease_A.has_apriori_event(symptom_y, 20)
+disease_A = Event("Disease A", prevalence=0.10)
+disease_A.has_apriori_event(symptom_x, 0.90)
+disease_A.has_apriori_event(symptom_y, 0.20)
 
-disease_B = Event("Disease B", prevalence=40)
-disease_B.has_apriori_event(symptom_x, 60)
-disease_B.has_apriori_event(symptom_y, 70)
+disease_B = Event("Disease B", prevalence=0.40)
+disease_B.has_apriori_event(symptom_x, 0.60)
+disease_B.has_apriori_event(symptom_y, 0.70)
 
-disease_C = Event("Disease C", prevalence=30)
-disease_C.has_apriori_event(symptom_x, 40)
-disease_C.has_apriori_event(symptom_y, 80)
+disease_C = Event("Disease C", prevalence=0.30)
+disease_C.has_apriori_event(symptom_x, 0.40)
+disease_C.has_apriori_event(symptom_y, 0.80)
 
 patient = Host("Human", possible_events=[disease_A, disease_B])
 
