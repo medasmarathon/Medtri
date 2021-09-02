@@ -50,3 +50,8 @@ class IObservation(ABC):
       self.__presence_probability = 1
     else:
       self.__presence_probability = presence_probability
+
+
+class IHost(ABC):
+  def is_event_possible(self, event: IEvent):
+    pass
