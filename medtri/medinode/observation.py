@@ -26,7 +26,8 @@ class Observation(IObservation):
     self.event = event
     self.is_observed = is_observed
     self.is_present = is_present
-    self.presence_probability = presence_probability
+    if presence_probability is not None:
+      self.presence_probability = presence_probability
 
   def get_presence_probability(self):
     """
