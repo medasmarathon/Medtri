@@ -15,9 +15,9 @@ def frequency(event: IEvent, condition: Condition):
   return 0
 
 
-def probability(event_input: List[Union[bool, None]], event_probs: List[float]):
+def probability(observed_status_of_events: List[Union[bool, None]], event_probs: List[float]):
   prob = 1
-  for index, event in enumerate(event_input):
-    if event is not None:
-      prob *= event_probs[index] if event else (1 - event_probs[index])
+  for index, is_observed in enumerate(observed_status_of_events):
+    if is_observed is not None:
+      prob *= event_probs[index] if is_observed else (1 - event_probs[index])
   return prob
