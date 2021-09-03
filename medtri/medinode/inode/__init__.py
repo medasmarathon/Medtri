@@ -1,7 +1,24 @@
 from abc import ABC, abstractmethod
+from typing import List
 
 
 class IEvent(ABC):
+  @property
+  def apriori_events(self) -> List["IEvent"]:
+    return self.__apriori_events
+
+  @apriori_events.setter
+  def apriori_events(self, apriori_events):
+    self.__apriori_events = apriori_events
+
+  @property
+  def outcome_events(self) -> List["IEvent"]:
+    return self.__outcome_events
+
+  @outcome_events.setter
+  def outcome_events(self, outcome_events):
+    self.__outcome_events = outcome_events
+
   @property
   def prevalence(self):
     return self.__prevalence
@@ -42,5 +59,13 @@ class IObservation(ABC):
 
 
 class IHost(ABC):
+  @property
+  def possible_events(self) -> List[IEvent]:
+    return self.__possible_events
+
+  @possible_events.setter
+  def possible_events(self, possible_events):
+    self.__possible_events = possible_events
+
   def is_event_possible(self, event: IEvent):
     pass

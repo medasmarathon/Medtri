@@ -50,7 +50,7 @@ class BaseEvent(IEvent):
         return index
     return -1
 
-  def is_outcome_of(self, event: "BaseEvent"):
+  def is_outcome_of(self, event: IEvent):
     """
     Return:
     -------
@@ -66,7 +66,7 @@ class BaseEvent(IEvent):
         return True
     return False
 
-  def is_apriori_of(self, event: "BaseEvent"):
+  def is_apriori_of(self, event: IEvent):
     """
     Return:
     -------
