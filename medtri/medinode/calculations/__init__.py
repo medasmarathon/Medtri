@@ -42,7 +42,9 @@ def frequency(event: IEvent, condition: Condition):
   for possible_eve in condition.host.possible_events:
     direct_apriori_events.extend(possible_eve.apriori_events)
   print(direct_apriori_events)
-  print(event_count(direct_apriori_events))
+  event_set = get_distinct_events(direct_apriori_events)
+  event_matrix = np.full((len(condition.host.possible_events), event_count(event_set)), None)
+  print(event_matrix)
 
   ## direct apriori -> 1 layer
   # build apriori events layer lead to this event + events layer which have outcome causing this event
