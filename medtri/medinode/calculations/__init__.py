@@ -4,9 +4,11 @@ from medtri.medinode.condition import Condition
 import numpy as np
 
 
-def probability(observed_status_of_events: List[Union[bool, None]], event_probs: List[float]):
+def chain_of_events_probability(
+    events_chain_status: List[Union[bool, None]], event_probs: List[float]
+    ):
   prob = 1
-  for index, is_observed in enumerate(observed_status_of_events):
+  for index, is_observed in enumerate(events_chain_status):
     if is_observed is not None:
       prob *= event_probs[index] if is_observed else (1 - event_probs[index])
   return prob

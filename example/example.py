@@ -27,4 +27,8 @@ symptom_z_observation = Observation(symptom_z, is_present=True)
 patient_condition = patient | symptom_x_observation
 
 print(disease_A.is_outcome_of(symptom_x))
-frequency(disease_A, patient_condition)
+print(
+    disease_B.relative_probability_of_observations_chain([
+        symptom_x_observation, symptom_y_observation
+        ])
+    )

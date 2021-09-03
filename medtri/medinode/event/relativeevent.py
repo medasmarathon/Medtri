@@ -36,3 +36,21 @@ class RelativeEvent(BaseEvent):
       # Else update prevalence
       self.apriori_events[existed_apriori_event_index].prevalence = dependent_prevalence
     return self
+
+  def relative_probability_of_observations_chain(
+      self, observations: List[obs.Observation]
+      ) -> float:
+    prob = 1
+    for ob in observations:
+      if ob.is_present is not None and ob.event.is_apriori_of(self):
+        relative_apriori_event = self.get_apriori_event(ob.event)
+        if relative_apriori_event is not None:
+          prob *= relative_apriori_event.prevalence if ob.is_present else (
+              1 - relative_apriori_event.prevalence
+              )
+        else:
+          """
+          No relative apriori event exists in this primary event, thus the probability of having this relative event in the context of primary event is 0
+          """
+          return 0
+    return prob
