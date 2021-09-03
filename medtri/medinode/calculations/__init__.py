@@ -12,6 +12,9 @@ def frequency(event: IEvent, condition: Condition):
   if not observations:
     return event.prevalence
 
+  # get all possible events from host
+  # get all events causing 'possible events' (apriori events of possible events OR events has outcome as possible events)
+
   return 0
 
 
