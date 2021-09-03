@@ -16,8 +16,11 @@ class Condition:
         observed_observations.append(obs)
     return observed_observations
 
-  def has_observation_for_event(self, event: BaseEvent, presence: bool):
-    self.update_observation(Observation(event), presence)
+  def has_observation_for_event(self, event: BaseEvent):
+    existed_event_observation_index = self.__get_observation_index_for_event(event)
+    if existed_event_observation_index == -1:
+      return False
+    return True
 
   def update_observation(self, observation: Observation, presence: bool = None):
     if presence is not None:

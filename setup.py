@@ -22,4 +22,5 @@ setup(
         ],
     packages=find_packages(exclude=['example*', '*constant*']),
     python_requires=">=3.6",
+    install_requires=['numpy']
     )
