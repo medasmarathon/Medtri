@@ -1,4 +1,3 @@
-from medtri.medinode.calculations.prognosis import calculate_event_probability
 from medtri.medinode import Host, Observation, Condition
 from medtri.medinode import RelativeEvent as Event
 
@@ -27,4 +26,3 @@ symptom_z_observation = Observation(symptom_z, is_present=True)
 patient_condition = patient | symptom_x_observation
 
 print(disease_A.is_outcome_of(symptom_x))
-calculate_event_probability(patient_condition, disease_A)
