@@ -1,9 +1,9 @@
-from medtri.medinode.constraints import get_percentage_value
+from medtri.medinode.inode import IEvent
 from typing import List
 from copy import copy, deepcopy
 
 
-class BaseEvent:
+class BaseEvent(IEvent):
   """ Event with prevalence and no observation taken into account. This class should not be used globally. Use relative event instead
   """
   def __init__(
@@ -16,7 +16,7 @@ class BaseEvent:
     self.name = name
     self.apriori_events = apriori_events if apriori_events is not None else []
     self.outcome_events = outcome_events if outcome_events is not None else []
-    self.prevalence = get_percentage_value(prevalence)
+    self.prevalence = prevalence
 
   def remove_apriori_event(self, event: "BaseEvent"):
     existed_apriori_event_index = self._get_apriori_event_index(event)
@@ -50,7 +50,7 @@ class BaseEvent:
         return index
     return -1
 
-  def is_outcome_of(self, event: "BaseEvent"):
+  def is_outcome_of(self, event: IEvent):
     """
     Return:
     -------
@@ -66,7 +66,7 @@ class BaseEvent:
         return True
     return False
 
-  def is_apriori_of(self, event: "BaseEvent"):
+  def is_apriori_of(self, event: IEvent):
     """
     Return:
     -------

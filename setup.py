@@ -20,6 +20,7 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         ],
-    packages=find_packages(exclude=['example*']),
+    packages=find_packages(exclude=['example*', '*constant*']),
     python_requires=">=3.6",
+    install_requires=['numpy']
     )
