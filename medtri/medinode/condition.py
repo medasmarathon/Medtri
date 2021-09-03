@@ -12,7 +12,7 @@ class Condition:
   def get_observed_observations(self):
     observed_observations = []
     for obs in self.observations:
-      if obs.is_observed:
+      if obs.is_present is not None:
         observed_observations.append(obs)
     return observed_observations
 
@@ -24,7 +24,6 @@ class Condition:
 
   def update_observation(self, observation: Observation, presence: bool = None):
     if presence is not None:
-      observation.is_observed = True
       observation.is_present = presence
     existed_event_observation_index = self.__get_observation_index_for_event(observation.event)
     if existed_event_observation_index == -1:
