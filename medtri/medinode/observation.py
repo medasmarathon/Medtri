@@ -7,13 +7,7 @@ class Observation(IObservation):
   """
   Observation of an Event
   """
-  def __init__(
-      self,
-      event: BaseEvent,
-      is_present: bool = None,
-      presence_probability: float = None,
-      is_observed: bool = True
-      ) -> None:
+  def __init__(self, event: BaseEvent, is_present: bool = None, is_observed: bool = True) -> None:
     """Observation of an Event
 
     Args:
@@ -26,27 +20,9 @@ class Observation(IObservation):
     self.event = event
     self.is_observed = is_observed
     self.is_present = is_present
-    if presence_probability is not None:
-      self.presence_probability = presence_probability
-
-  def get_presence_probability(self):
-    """
-    Returns:
-    --------
-        `float`: Return probability percentage. `presence_probability` takes precedence over `is_present` if both inputted
-    """
-    if not self.is_observed:
-      return None
-    if self.presence_probability is None and self.is_present is None:
-      return None
-    if self.is_present is not None:
-      return 1 if self.is_present else 0
-    return self.presence_probability
 
   def __eq__(self, o: object) -> bool:
     if isinstance(o, Observation):
-      return (
-          self.event == o.event and self.get_presence_probability() == o.get_presence_probability()
-          )
+      return (self.event == o.event and self.is_present == o.is_present)
     else:
       raise TypeError(incorrect_type_comparison(Observation.__name__))

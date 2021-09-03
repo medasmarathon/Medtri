@@ -38,18 +38,7 @@ class IEvent(ABC):
 
 
 class IObservation(ABC):
-  @property
-  def presence_probability(self):
-    return self.__presence_probability
-
-  @presence_probability.setter
-  def presence_probability(self, presence_probability):
-    if presence_probability < 0:
-      self.__presence_probability = 0
-    elif presence_probability > 1:
-      self.__presence_probability = 1
-    else:
-      self.__presence_probability = presence_probability
+  pass
 
 
 class IHost(ABC):
