@@ -29,7 +29,7 @@ class Host(IHost):
     null_condition = self | []
     total_not_null_prob = null_condition.total_probability_relative_to_observations()
     if total_not_null_prob > 1:
-      raise ValueError("Total event prevalence for this host is greater than 1")
+      raise ValueError(f"Total event prevalence for host {self.name} is greater than 1")
     self.null_event = NullEvent(prevalence=1 - total_not_null_prob)
     self.possible_events.append(self.null_event)
 

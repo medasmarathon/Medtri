@@ -3,29 +3,19 @@ from typing import List, Union
 
 
 class IEvent(ABC):
+  apriori_events: List["IEvent"]
+  outcome_events: List["IEvent"]
+  observations: List["IObservation"]
+
   @property
   def name(self) -> str:
     return self.__name
 
   @name.setter
   def name(self, name):
+    if name == "Null":
+      raise NameError("Name for event cannot be 'Null'")
     self.__name = name
-
-  @property
-  def apriori_events(self) -> List["IEvent"]:
-    return self.__apriori_events
-
-  @apriori_events.setter
-  def apriori_events(self, apriori_events):
-    self.__apriori_events = apriori_events
-
-  @property
-  def outcome_events(self) -> List["IEvent"]:
-    return self.__outcome_events
-
-  @outcome_events.setter
-  def outcome_events(self, outcome_events):
-    self.__outcome_events = outcome_events
 
   @property
   def prevalence(self):
@@ -69,39 +59,13 @@ class IEvent(ABC):
 
 
 class IObservation(ABC):
-  @property
-  def event(self) -> IEvent:
-    return self.__event
-
-  @event.setter
-  def event(self, event):
-    self.__event = event
-
-  @property
-  def is_present(self) -> Union[bool, None]:
-    return self.__is_present
-
-  @is_present.setter
-  def is_present(self, is_present):
-    self.__is_present = is_present
+  event: IEvent
+  is_present: Union[bool, None]
 
 
 class IHost(ABC):
-  @property
-  def null_event(self) -> IEvent:
-    return self.__null_event
-
-  @null_event.setter
-  def null_event(self, event):
-    self.__null_event = event
-
-  @property
-  def possible_events(self) -> List[IEvent]:
-    return self.__possible_events
-
-  @possible_events.setter
-  def possible_events(self, possible_events):
-    self.__possible_events = possible_events
+  null_event: IEvent
+  possible_events: List[IEvent]
 
   def is_event_possible(self, event: IEvent):
     pass

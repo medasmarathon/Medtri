@@ -54,7 +54,7 @@ class BaseEvent(IEvent):
     """
     Return:
     -------
-        True if `event` has any related outcomes as `self` or `event` is an apriori to `self`
+        True if `self` is an outcome of `event` or `self` has any aprioris being outcome of `event`
     """
     if self == event:
       return True
@@ -70,7 +70,7 @@ class BaseEvent(IEvent):
     """
     Return:
     -------
-        True if `self` is an apriori to `event` or `self` has any related outcomes as `event`
+        True if `self` is an apriori to `event` or `self` has any outcomes being apriori of `event`
     """
     if self == event:
       return True
@@ -86,7 +86,7 @@ class BaseEvent(IEvent):
     if isinstance(o, IEvent):
       return self.name == o.name
     else:
-      raise TypeError("Compare event with different type object")
+      raise TypeError(f"Compare event with different type object: {type(o)}")
 
   def index_in_observations(self, observations: List[IObservation]):
     for index, ob in enumerate(observations):

@@ -52,6 +52,9 @@ class Condition:
     return total_probs
 
   def probability_of(self, event: IEvent) -> float:
+    for o in self.observations:
+      if o.event == event and o.is_present:
+        return 1
     total_probs = self.total_probability_relative_to_observations()
     if total_probs == 0:
       return 0
