@@ -17,7 +17,7 @@ disease_C = Event("Disease C", prevalence=0.30)
 disease_C.has_apriori_event(symptom_x, 0.40)
 disease_C.has_apriori_event(symptom_y, 0.80)
 
-patient = Host("Human", possible_events=[disease_A, disease_B, disease_C, symptom_x])
+patient = Host("Human", possible_events=[disease_A, disease_B, disease_C])
 
 symptom_x_observation = Observation(symptom_x, is_present=True)
 symptom_y_observation = Observation(symptom_y, is_present=True)
