@@ -1,3 +1,4 @@
+from medtri.medinode.inode import IEvent, IObservation
 from medtri.medinode.host import Host
 from typing import List
 from ..event import BaseEvent
@@ -11,8 +12,8 @@ class RelativeEvent(BaseEvent):
   def __init__(
       self,
       name: str,
-      apriori_events: List[BaseEvent] = None,
-      outcome_events: List[BaseEvent] = None,
+      apriori_events: List[IEvent] = None,
+      outcome_events: List[IEvent] = None,
       prevalence: float = 0,
       observations: List[obs.Observation] = None,
       hosts: List[Host] = None
@@ -37,7 +38,7 @@ class RelativeEvent(BaseEvent):
       self.apriori_events[existed_apriori_event_index].prevalence = dependent_prevalence
     return self
 
-  def relative_probability_of_observations(self, observations: List[obs.Observation]) -> float:
+  def relative_probability_of_observations(self, observations: List[IObservation]) -> float:
     prob = 1
     for ob in observations:
       if ob.is_present is not None and ob.event.is_apriori_of(self):
@@ -53,5 +54,5 @@ class RelativeEvent(BaseEvent):
           return 0
     return prob
 
-  def prevalence_relative_to_observations(self, observations: List[obs.Observation]) -> float:
+  def prevalence_relative_to_observations(self, observations: List[IObservation]) -> float:
     return self.relative_probability_of_observations(observations) * self.prevalence

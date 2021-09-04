@@ -9,8 +9,8 @@ class BaseEvent(IEvent):
   def __init__(
       self,
       name: str,
-      apriori_events: List["BaseEvent"] = None,
-      outcome_events: List["BaseEvent"] = None,
+      apriori_events: List[IEvent] = None,
+      outcome_events: List[IEvent] = None,
       prevalence: float = 0
       ):
     self.name = name
@@ -18,33 +18,33 @@ class BaseEvent(IEvent):
     self.outcome_events = outcome_events if outcome_events is not None else []
     self.prevalence = prevalence
 
-  def remove_apriori_event(self, event: "BaseEvent"):
+  def remove_apriori_event(self, event: IEvent):
     existed_apriori_event_index = self._get_apriori_event_index(event)
     if existed_apriori_event_index != -1:
       # Current observations not include this event
       self.apriori_events.pop(existed_apriori_event_index)
 
-  def remove_outcome_event(self, event: "BaseEvent"):
+  def remove_outcome_event(self, event: IEvent):
     existed_outcome_event_index = self._get_outcome_event_index(event)
     if existed_outcome_event_index != -1:
       # Current observations not include this event
       self.apriori_events.pop(existed_outcome_event_index)
 
-  def get_apriori_event(self, event: "BaseEvent"):
+  def get_apriori_event(self, event: IEvent):
     index = self._get_apriori_event_index(event)
     return self.apriori_events[index] if index != -1 else None
 
-  def _get_apriori_event_index(self, event: "BaseEvent") -> int:
+  def _get_apriori_event_index(self, event: IEvent) -> int:
     for index, eve in enumerate(self.apriori_events):
       if event == eve:
         return index
     return -1
 
-  def get_outcome_event(self, event: "BaseEvent"):
+  def get_outcome_event(self, event: IEvent):
     index = self._get_outcome_event_index(event)
     return self.apriori_events[index] if index != -1 else None
 
-  def _get_outcome_event_index(self, event: "BaseEvent") -> int:
+  def _get_outcome_event_index(self, event: IEvent) -> int:
     for index, eve in enumerate(self.outcome_events):
       if event == eve:
         return index

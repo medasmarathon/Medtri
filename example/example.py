@@ -1,4 +1,3 @@
-from medtri.medinode.calculations import frequency
 from medtri.medinode import Host, Observation, Condition
 from medtri.medinode import RelativeEvent as Event
 
