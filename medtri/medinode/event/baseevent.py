@@ -62,7 +62,7 @@ class BaseEvent(IEvent):
       if self.is_outcome_of(event_outcome):
         return True
     for self_apriori in self.apriori_events:
-      if event.is_apriori_of(self_apriori):
+      if self_apriori.is_outcome_of(event):
         return True
     return False
 
@@ -78,7 +78,7 @@ class BaseEvent(IEvent):
       if self.is_apriori_of(event_apriori):
         return True
     for self_outcome in self.outcome_events:
-      if event.is_outcome_of(self_outcome):
+      if self_outcome.is_apriori_of(event):
         return True
     return False
 
