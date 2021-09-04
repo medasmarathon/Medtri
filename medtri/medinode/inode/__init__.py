@@ -5,6 +5,7 @@ from typing import List, Union
 class IEvent(ABC):
   apriori_events: List["IEvent"]
   outcome_events: List["IEvent"]
+  observations: List["IObservation"]
 
   @property
   def name(self) -> str:

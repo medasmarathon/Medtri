@@ -19,7 +19,7 @@ class RelativeEvent(BaseEvent):
       apriori_events: List[IEvent] = None,
       outcome_events: List[IEvent] = None,
       prevalence: float = 0,
-      observations: List[obs.Observation] = None,
+      observations: List[IObservation] = None,
       hosts: List[Host] = None
       ):
     super().__init__(name, apriori_events, outcome_events, prevalence)
