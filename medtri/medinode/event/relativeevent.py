@@ -8,6 +8,10 @@ from copy import deepcopy
 
 class RelativeEvent(BaseEvent):
   """Relative event has prevalence probability with conducted observations
+  
+  Parameters:
+  -----------
+  observations : Existing observations. eg. prevalence is relative calculations in the presence of these observations
   """
   def __init__(
       self,
