@@ -37,9 +37,7 @@ class RelativeEvent(BaseEvent):
       self.apriori_events[existed_apriori_event_index].prevalence = dependent_prevalence
     return self
 
-  def relative_probability_of_observations_chain(
-      self, observations: List[obs.Observation]
-      ) -> float:
+  def relative_probability_of_observations(self, observations: List[obs.Observation]) -> float:
     prob = 1
     for ob in observations:
       if ob.is_present is not None and ob.event.is_apriori_of(self):
@@ -54,3 +52,6 @@ class RelativeEvent(BaseEvent):
           """
           return 0
     return prob
+
+  def prevalence_relative_to_observations(self, observations: List[obs.Observation]) -> float:
+    return self.relative_probability_of_observations(observations) * self.prevalence

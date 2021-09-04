@@ -27,8 +27,4 @@ symptom_z_observation = Observation(symptom_z, is_present=True)
 patient_condition = patient | symptom_x_observation
 
 print(disease_A.is_outcome_of(symptom_x))
-print(
-    disease_B.relative_probability_of_observations_chain([
-        symptom_x_observation, symptom_y_observation
-        ])
-    )
+print(disease_A.prevalence_relative_to_observations([symptom_x_observation]))
