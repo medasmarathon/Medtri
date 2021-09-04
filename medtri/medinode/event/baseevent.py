@@ -13,6 +13,8 @@ class BaseEvent(IEvent):
       outcome_events: List[IEvent] = None,
       prevalence: float = 0
       ):
+    if name == "Null":
+      raise NameError("Name for event cannot be 'Null'")
     self.name = name
     self.apriori_events = apriori_events if apriori_events is not None else []
     self.outcome_events = outcome_events if outcome_events is not None else []

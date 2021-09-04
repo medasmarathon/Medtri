@@ -52,6 +52,7 @@ class RelativeEvent(BaseEvent):
     apriori_list = self.apriori_events.copy()
     prob = 1
     for dependent_event in self.apriori_events:
+      # TODO: should check for compound events first here
       apriori_list.remove(dependent_event)
       index = dependent_event.index_in_observations(obs)
       if index is not None:
