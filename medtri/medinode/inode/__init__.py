@@ -3,17 +3,10 @@ from typing import List, Union
 
 
 class IEvent(ABC):
+  name: str
   apriori_events: List["IEvent"]
   outcome_events: List["IEvent"]
   observations: List["IObservation"]
-
-  @property
-  def name(self) -> str:
-    return self.__name
-
-  @name.setter
-  def name(self, name):
-    self.__name = name
 
   @property
   def prevalence(self):
