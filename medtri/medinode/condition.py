@@ -5,7 +5,7 @@ from typing import List
 
 
 class Condition:
-  def __init__(self, host: IHost, observations: List[Observation] = []) -> None:
+  def __init__(self, host: IHost, observations: List[IObservation] = []) -> None:
     self.host = host
     self.observations = observations
 
@@ -45,8 +45,13 @@ class Condition:
       # Current observations not include this event
       self.observations.pop(existed_event_observation_index)
 
-  def total_probability_relative_to_observations(self, observations: List[IObservation]) -> float:
+  def total_probability_relative_to_observations(self) -> float:
     total_probs = 0
     for event in self.host.possible_events:
-      total_probs += event.prevalence_relative_to_observations(observations)
+      total_probs += event.prevalence_relative_to_observations(self.observations)
     return total_probs
+
+  def probability_of(self, event: IEvent) -> float:
+    return event.prevalence_relative_to_observations(
+        self.observations
+        ) / self.total_probability_relative_to_observations()
