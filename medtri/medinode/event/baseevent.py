@@ -1,4 +1,4 @@
-from medtri.medinode.inode import IEvent
+from medtri.medinode.inode import IEvent, IObservation
 from typing import List
 from copy import copy, deepcopy
 
@@ -87,3 +87,9 @@ class BaseEvent(IEvent):
       return self.name == o.name
     else:
       raise TypeError("Compare event with different type object")
+
+  def is_in_observations(self, observations: List[IObservation]):
+    for ob in observations:
+      if self == ob.event:
+        return True
+    return False

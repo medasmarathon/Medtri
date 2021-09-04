@@ -52,7 +52,11 @@ class RelativeEvent(BaseEvent):
           No relative apriori event exists in this primary event, thus the probability of having this relative event in the context of primary event is 0
           """
           return 0
+    for dependent_event in self.apriori_events:
+      if dependent_event.
     return prob
 
   def prevalence_relative_to_observations(self, observations: List[IObservation]) -> float:
     return self.relative_probability_of_observations(observations) * self.prevalence
+  
+  
