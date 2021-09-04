@@ -88,8 +88,8 @@ class BaseEvent(IEvent):
     else:
       raise TypeError("Compare event with different type object")
 
-  def is_in_observations(self, observations: List[IObservation]):
-    for ob in observations:
+  def index_in_observations(self, observations: List[IObservation]):
+    for index, ob in enumerate(observations):
       if self == ob.event:
-        return True
-    return False
+        return index
+    return None

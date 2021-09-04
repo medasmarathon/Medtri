@@ -39,24 +39,16 @@ class RelativeEvent(BaseEvent):
     return self
 
   def relative_probability_of_observations(self, observations: List[IObservation]) -> float:
+    obs = observations.copy()
     prob = 1
-    for ob in observations:
-      if ob.is_present is not None and ob.event.is_apriori_of(self):
-        relative_apriori_event = self.get_apriori_event(ob.event)
-        if relative_apriori_event is not None:
-          prob *= relative_apriori_event.prevalence if ob.is_present else (
-              1 - relative_apriori_event.prevalence
-              )
-        else:
-          """
-          No relative apriori event exists in this primary event, thus the probability of having this relative event in the context of primary event is 0
-          """
-          return 0
     for dependent_event in self.apriori_events:
-      if dependent_event.
+      index = dependent_event.index_in_observations(obs)
+      if index is not None:
+        prob *= dependent_event.prevalence if obs[index].is_present else (
+            1 - dependent_event.prevalence
+            )
+        obs.pop(index)
     return prob
 
   def prevalence_relative_to_observations(self, observations: List[IObservation]) -> float:
     return self.relative_probability_of_observations(observations) * self.prevalence
-  
-  

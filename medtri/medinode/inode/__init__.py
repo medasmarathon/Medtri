@@ -56,7 +56,7 @@ class IEvent(ABC):
   def prevalence_relative_to_observations(self, observations: List["IObservation"]) -> float:
     return 0
 
-  def is_in_observations(self, observations: List["IObservation"]):
+  def index_in_observations(self, observations: List["IObservation"]):
     pass
 
 
