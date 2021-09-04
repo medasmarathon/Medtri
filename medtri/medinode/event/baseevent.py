@@ -83,7 +83,7 @@ class BaseEvent(IEvent):
     return False
 
   def __eq__(self, o: object) -> bool:
-    if isinstance(o, BaseEvent):
+    if isinstance(o, IEvent):
       return self.name == o.name
     else:
       raise TypeError("Compare event with different type object")

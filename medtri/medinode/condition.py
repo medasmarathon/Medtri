@@ -55,4 +55,14 @@ class Condition:
     total_probs = self.total_probability_relative_to_observations()
     if total_probs == 0:
       return 0
+    if self.__should_null_event_happen():
+      total_probs += self.host.null_event.prevalence
     return event.prevalence_relative_to_observations(self.observations) / total_probs
+
+  def __should_null_event_happen(self):
+    if not self.observations:
+      return True
+    for obs in self.observations:
+      if obs.is_present and self.host.is_event_possible(obs.event):
+        return False
+    return True

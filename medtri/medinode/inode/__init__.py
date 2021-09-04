@@ -4,6 +4,14 @@ from typing import List, Union
 
 class IEvent(ABC):
   @property
+  def name(self) -> str:
+    return self.__name
+
+  @name.setter
+  def name(self, name):
+    self.__name = name
+
+  @property
   def apriori_events(self) -> List["IEvent"]:
     return self.__apriori_events
 
@@ -79,6 +87,14 @@ class IObservation(ABC):
 
 
 class IHost(ABC):
+  @property
+  def null_event(self) -> IEvent:
+    return self.__null_event
+
+  @null_event.setter
+  def null_event(self, event):
+    self.__null_event = event
+
   @property
   def possible_events(self) -> List[IEvent]:
     return self.__possible_events
