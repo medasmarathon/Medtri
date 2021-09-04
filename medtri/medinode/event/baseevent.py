@@ -86,7 +86,7 @@ class BaseEvent(IEvent):
     if isinstance(o, IEvent):
       return self.name == o.name
     else:
-      raise TypeError("Compare event with different type object")
+      raise TypeError(f"Compare event with different type object: {type(o)}")
 
   def index_in_observations(self, observations: List[IObservation]):
     for index, ob in enumerate(observations):
