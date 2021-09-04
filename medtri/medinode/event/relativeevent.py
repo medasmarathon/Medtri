@@ -1,3 +1,4 @@
+from medtri.medinode.inode import IEvent, IObservation
 from medtri.medinode.host import Host
 from typing import List
 from ..event import BaseEvent
@@ -11,8 +12,8 @@ class RelativeEvent(BaseEvent):
   def __init__(
       self,
       name: str,
-      apriori_events: List[BaseEvent] = None,
-      outcome_events: List[BaseEvent] = None,
+      apriori_events: List[IEvent] = None,
+      outcome_events: List[IEvent] = None,
       prevalence: float = 0,
       observations: List[obs.Observation] = None,
       hosts: List[Host] = None
@@ -37,20 +38,37 @@ class RelativeEvent(BaseEvent):
       self.apriori_events[existed_apriori_event_index].prevalence = dependent_prevalence
     return self
 
-  def relative_probability_of_observations_chain(
-      self, observations: List[obs.Observation]
-      ) -> float:
+  def relative_probability_of_observations(self, observations: List[IObservation]) -> float:
+    obs = observations.copy()
+    apriori_list = self.apriori_events.copy()
     prob = 1
-    for ob in observations:
-      if ob.is_present is not None and ob.event.is_apriori_of(self):
-        relative_apriori_event = self.get_apriori_event(ob.event)
-        if relative_apriori_event is not None:
-          prob *= relative_apriori_event.prevalence if ob.is_present else (
-              1 - relative_apriori_event.prevalence
-              )
-        else:
+    if self.__is_observed_in(obs):
+      return 1
+    for dependent_event in self.apriori_events:
+      apriori_list.remove(dependent_event)
+      index = dependent_event.index_in_observations(obs)
+      if index is not None:
+        prob *= dependent_event.prevalence if obs[index].is_present else (
+            1 - dependent_event.prevalence
+            )
+        obs.pop(index)
+    if any(obs) and any(apriori_list):
+      """
+      Recursively search through apriori events hierachy to calculate relative prevalence
+      """
+      for dependent_event in apriori_list:
+        if any(dependent_event.apriori_events):
           """
-          No relative apriori event exists in this primary event, thus the probability of having this relative event in the context of primary event is 0
+          If dependent_event has no apriori event -> dependent_event is a pure event --> pass
           """
-          return 0
+          prob *= dependent_event.prevalence_relative_to_observations(obs)
     return prob
+
+  def prevalence_relative_to_observations(self, observations: List[IObservation]) -> float:
+    return self.relative_probability_of_observations(observations) * self.prevalence
+
+  def __is_observed_in(self, observations: List[IObservation]) -> bool:
+    index = self.index_in_observations(observations)
+    if index is not None and observations[index].is_present:
+      return True
+    return False

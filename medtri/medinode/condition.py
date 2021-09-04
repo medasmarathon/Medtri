@@ -1,11 +1,11 @@
-from medtri.medinode.inode import IHost
+from medtri.medinode.inode import IEvent, IHost, IObservation
 from medtri.medinode.observation import Observation
 from medtri.medinode.event import BaseEvent
 from typing import List
 
 
 class Condition:
-  def __init__(self, host: IHost, observations: List[Observation] = []) -> None:
+  def __init__(self, host: IHost, observations: List[IObservation] = []) -> None:
     self.host = host
     self.observations = observations
 
@@ -33,7 +33,7 @@ class Condition:
       # Replace old observation with new one
       self.observations[existed_event_observation_index] = observation
 
-  def __get_observation_index_for_event(self, event: BaseEvent) -> int:
+  def __get_observation_index_for_event(self, event: IEvent) -> int:
     for index, obs in enumerate(self.observations):
       if event is obs.event:
         return index
@@ -44,3 +44,25 @@ class Condition:
     if existed_event_observation_index != -1:
       # Current observations not include this event
       self.observations.pop(existed_event_observation_index)
+
+  def total_probability_relative_to_observations(self) -> float:
+    total_probs = 0
+    for event in self.host.possible_events:
+      total_probs += event.prevalence_relative_to_observations(self.observations)
+    return total_probs
+
+  def probability_of(self, event: IEvent) -> float:
+    total_probs = self.total_probability_relative_to_observations()
+    if total_probs == 0:
+      return 0
+    if not self.__should_null_event_happen():
+      total_probs -= self.host.null_event.prevalence
+    return event.prevalence_relative_to_observations(self.observations) / total_probs
+
+  def __should_null_event_happen(self):
+    if not self.observations:
+      return True
+    for obs in self.observations:
+      if obs.is_present and self.host.is_event_possible(obs.event):
+        return False
+    return True

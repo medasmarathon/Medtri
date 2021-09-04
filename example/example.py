@@ -1,4 +1,3 @@
-from medtri.medinode.calculations import frequency
 from medtri.medinode import Host, Observation, Condition
 from medtri.medinode import RelativeEvent as Event
 
@@ -18,17 +17,14 @@ disease_C = Event("Disease C", prevalence=0.30)
 disease_C.has_apriori_event(symptom_x, 0.40)
 disease_C.has_apriori_event(symptom_y, 0.80)
 
-patient = Host("Human", possible_events=[disease_A, disease_B])
+patient = Host("Human", possible_events=[disease_A, disease_B, disease_C])
 
 symptom_x_observation = Observation(symptom_x, is_present=True)
 symptom_y_observation = Observation(symptom_y, is_present=True)
 symptom_z_observation = Observation(symptom_z, is_present=True)
 
-patient_condition = patient | symptom_x_observation
+patient_condition = patient | [symptom_z_observation]
 
-print(disease_A.is_outcome_of(symptom_x))
-print(
-    disease_B.relative_probability_of_observations_chain([
-        symptom_x_observation, symptom_y_observation
-        ])
-    )
+print(patient.is_event_possible(symptom_x))
+print(disease_A.prevalence_relative_to_observations([symptom_x_observation]))
+print(patient_condition.probability_of(disease_B))
