@@ -48,6 +48,14 @@ class RelativeEvent(BaseEvent):
             1 - dependent_event.prevalence
             )
         obs.pop(index)
+    if any(obs) and any(self.apriori_events):
+      for dependent_event in self.apriori_events:
+        prob *= dependent_event.prevalence_relative_to_observations(obs)
+    if len(obs) == len(observations):
+      """
+      If no observation can be taken to count prevalence --> those observations can not be happened
+      """
+      return 0
     return prob
 
   def prevalence_relative_to_observations(self, observations: List[IObservation]) -> float:

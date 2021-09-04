@@ -23,7 +23,7 @@ symptom_x_observation = Observation(symptom_x, is_present=True)
 symptom_y_observation = Observation(symptom_y, is_present=True)
 symptom_z_observation = Observation(symptom_z, is_present=True)
 
-patient_condition = patient | [symptom_x_observation]
+patient_condition = patient | [symptom_z_observation]
 
 print(disease_A.is_outcome_of(symptom_x))
 print(disease_A.prevalence_relative_to_observations([symptom_x_observation]))

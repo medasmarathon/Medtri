@@ -52,6 +52,7 @@ class Condition:
     return total_probs
 
   def probability_of(self, event: IEvent) -> float:
-    return event.prevalence_relative_to_observations(
-        self.observations
-        ) / self.total_probability_relative_to_observations()
+    total_probs = self.total_probability_relative_to_observations()
+    if total_probs == 0:
+      return 0
+    return event.prevalence_relative_to_observations(self.observations) / total_probs
