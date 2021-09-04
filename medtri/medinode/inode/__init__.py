@@ -9,6 +9,8 @@ class IEvent(ABC):
 
   @name.setter
   def name(self, name):
+    if name == "Null":
+      raise NameError("Name for event cannot be 'Null'")
     self.__name = name
 
   @property
