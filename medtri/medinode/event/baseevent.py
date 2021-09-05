@@ -8,26 +8,12 @@ from copy import copy, deepcopy
 class BaseEvent(IEvent):
   """ Event with prevalence and no observation taken into account. This class should not be used globally. Use relative event instead
   """
-  def __init__(
-      self,
-      name: str,
-      apriori_events: List[IEvent] = None,
-      outcome_events: List[IEvent] = None,
-      prevalence: float = 0
-      ):
+  def __init__(self, name: str, prevalence: float = 0):
     if name == "Null":
       raise NameError("Name for event cannot be 'Null'")
     self.name = name
-    self.apriori_events = apriori_events if apriori_events is not None else []
-    self.outcome_events = outcome_events if outcome_events is not None else []
     self.prevalence = prevalence
     self.event_links = []
-
-  def _get_apriori_event_index(self, event: IEvent) -> int:
-    for index, eve in enumerate(self.apriori_events):
-      if event == eve:
-        return index
-    return -1
 
   def is_outcome_of(self, event: IEvent):
     """
@@ -38,8 +24,8 @@ class BaseEvent(IEvent):
     if self == event:
       return True
     for apriori_link in event.event_links:
-      if (apriori_link.link_type == EventRelation.OUTCOME and apriori_link.from_event == event
-          and self.is_outcome_of(apriori_link.to_event)):
+      if (apriori_link.link_type == EventRelation.OUTCOME and apriori_link.event_cause == event
+          and self.is_outcome_of(apriori_link.event_target)):
         return True
     return False
 
@@ -52,8 +38,8 @@ class BaseEvent(IEvent):
     if self == event:
       return True
     for apriori_link in event.event_links:
-      if (apriori_link.link_type == EventRelation.APRIORI and apriori_link.to_event == event
-          and self.is_apriori_of(apriori_link.from_event)):
+      if (apriori_link.link_type == EventRelation.APRIORI and apriori_link.event_target == event
+          and self.is_apriori_of(apriori_link.event_cause)):
         return True
     return False
 

@@ -66,6 +66,6 @@ class IHost(ABC):
 
 class IEventLink(ABC):
   link_type: EventRelation
-  from_event: IEvent
-  to_event: IEvent
+  event_cause: IEvent
+  event_target: IEvent
   value: float

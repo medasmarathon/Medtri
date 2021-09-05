@@ -14,10 +14,10 @@ class Host(IHost):
     self.__add_null_event()
 
   def add_event_link(
-      self, link_type: EventRelation, from_event: IEvent, to_event: IEvent, link_value: float
+      self, link_type: EventRelation, cause: IEvent, target: IEvent, link_value: float
       ):
-    from_event.event_links.append(EventLink(link_type, from_event, to_event, link_value))
-    to_event.event_links.append(EventLink(link_type, from_event, to_event, link_value))
+    cause.event_links.append(EventLink(link_type, cause, target, link_value))
+    target.event_links.append(EventLink(link_type, cause, target, link_value))
 
   def get_all_possible_outcomes_of(self, event: IEvent):
     outcome_events = []

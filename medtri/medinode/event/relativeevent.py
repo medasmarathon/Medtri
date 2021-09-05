@@ -17,31 +17,13 @@ class RelativeEvent(BaseEvent):
   def __init__(
       self,
       name: str,
-      apriori_events: List[IEvent] = None,
-      outcome_events: List[IEvent] = None,
       prevalence: float = 0,
       observations: List[IObservation] = None,
       hosts: List[Host] = None
       ):
-    super().__init__(name, apriori_events, outcome_events, prevalence)
+    super().__init__(name, prevalence)
     self.observations = observations if observations is not None else []
     self.hosts = hosts if hosts is not None else []
-
-  def has_apriori_event(self, apriori_event: BaseEvent, dependent_prevalence: float) -> BaseEvent:
-    existed_apriori_event_index = self._get_apriori_event_index(apriori_event)
-    if existed_apriori_event_index == -1:
-      # If not exist this event, create new
-      dependent_event = RelativeEvent(
-          apriori_event.name,
-          prevalence=dependent_prevalence,
-          hosts=self.hosts,
-          observations=self.observations.append(obs.Observation(self, True))
-          )
-      self.apriori_events.append(dependent_event)
-    else:
-      # Else update prevalence
-      self.apriori_events[existed_apriori_event_index].prevalence = dependent_prevalence
-    return self
 
   def prevalence_relative_to_observations(self, observations: List[IObservation]) -> float:
     is_self_observed = self.__is_observed_in(observations)
@@ -58,7 +40,7 @@ class RelativeEvent(BaseEvent):
     prob = 1
     for link in apriori_links:
       # TODO: should check for compound events first here
-      index = link.from_event.index_in_observations(obs)
+      index = link.event_cause.index_in_observations(obs)
       if index is not None:
         prob = prob * link.value if (obs[index].is_present) else prob * (1 - link.value)
         obs.pop(index)
