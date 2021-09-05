@@ -21,6 +21,7 @@ class BaseEvent(IEvent):
     self.apriori_events = apriori_events if apriori_events is not None else []
     self.outcome_events = outcome_events if outcome_events is not None else []
     self.prevalence = prevalence
+    self.event_links = []
 
   def _get_apriori_event_index(self, event: IEvent) -> int:
     for index, eve in enumerate(self.apriori_events):
@@ -41,12 +42,12 @@ class BaseEvent(IEvent):
           apriori_link.to_event
           ):
         return True
-    for event_outcome in event.outcome_events:
-      if self.is_outcome_of(event_outcome):
-        return True
-    for self_apriori in self.apriori_events:
-      if self_apriori.is_outcome_of(event):
-        return True
+    # for event_outcome in event.outcome_events:
+    #   if self.is_outcome_of(event_outcome):
+    #     return True
+    # for self_apriori in self.apriori_events:
+    #   if self_apriori.is_outcome_of(event):
+    #     return True
     return False
 
   def is_apriori_of(self, event: IEvent):
@@ -58,16 +59,15 @@ class BaseEvent(IEvent):
     if self == event:
       return True
     for apriori_link in event.event_links:
-      if apriori_link.link_type == EventRelation.APRIORI and self.is_apriori_of(
-          apriori_link.from_event
-          ):
+      if (apriori_link.link_type == EventRelation.APRIORI and apriori_link.to_event == event
+          and self.is_apriori_of(apriori_link.from_event)):
         return True
-    for event_apriori in event.apriori_events:
-      if self.is_apriori_of(event_apriori):
-        return True
-    for self_outcome in self.outcome_events:
-      if self_outcome.is_apriori_of(event):
-        return True
+    # for event_apriori in event.apriori_events:
+    #   if self.is_apriori_of(event_apriori):
+    #     return True
+    # for self_outcome in self.outcome_events:
+    #   if self_outcome.is_apriori_of(event):
+    #     return True
     return False
 
   def __eq__(self, o: object) -> bool:
