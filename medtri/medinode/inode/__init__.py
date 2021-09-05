@@ -1,21 +1,14 @@
 from abc import ABC, abstractmethod
+from medtri.medinode.inode.constants import EventRelation
 from typing import List, Union
 
 
 class IEvent(ABC):
+  name: str
   apriori_events: List["IEvent"]
   outcome_events: List["IEvent"]
   observations: List["IObservation"]
-
-  @property
-  def name(self) -> str:
-    return self.__name
-
-  @name.setter
-  def name(self, name):
-    if name == "Null":
-      raise NameError("Name for event cannot be 'Null'")
-    self.__name = name
+  event_links: List["IEventLink"]
 
   @property
   def prevalence(self):
@@ -69,3 +62,10 @@ class IHost(ABC):
 
   def is_event_possible(self, event: IEvent):
     pass
+
+
+class IEventLink(ABC):
+  link_type: EventRelation
+  event_cause: IEvent
+  event_target: IEvent
+  value: float
