@@ -54,3 +54,9 @@ class BaseEvent(IEvent):
       if self == ob.event:
         return index
     return None
+
+  def __rshift__(self, other: IEvent):
+    return (self, other)
+
+  def __lshift__(self, other: IEvent):
+    return (other, self)
