@@ -10,3 +10,8 @@ class EventLink(IEventLink):
     self.event_cause = event_cause
     self.event_target = event_target
     self.weight = weight
+
+
+def add_event_link(link_type: EventRelation, cause: IEvent, target: IEvent, link_value: float):
+  cause.event_links.append(EventLink(link_type, cause, target, link_value))
+  target.event_links.append(EventLink(link_type, cause, target, link_value))

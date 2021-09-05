@@ -13,12 +13,6 @@ class Host(IHost):
     self.possible_events = possible_events
     self.__add_null_event()
 
-  def add_event_link(
-      self, link_type: EventRelation, cause: IEvent, target: IEvent, link_value: float
-      ):
-    cause.event_links.append(EventLink(link_type, cause, target, link_value))
-    target.event_links.append(EventLink(link_type, cause, target, link_value))
-
   def get_all_possible_outcomes_of(self, event: IEvent):
     outcome_events = []
     for e in self.possible_events:
