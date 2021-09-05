@@ -68,4 +68,4 @@ class IEventLink(ABC):
   link_type: EventRelation
   event_cause: IEvent
   event_target: IEvent
-  value: float
+  weight: float

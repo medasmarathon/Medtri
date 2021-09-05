@@ -38,11 +38,11 @@ class RelativeEvent(BaseEvent):
         link for link in self.event_links.copy() if (link.link_type == EventRelation.APRIORI)
         ]
     prob = 1
-    for link in apriori_links:
+    for apriori in apriori_links:
       # TODO: should check for compound events first here
-      index = link.event_cause.index_in_observations(obs)
+      index = apriori.event_cause.index_in_observations(obs)
       if index is not None:
-        prob = prob * link.value if (obs[index].is_present) else prob * (1 - link.value)
+        prob = (prob * apriori.weight if (obs[index].is_present) else prob * (1 - apriori.weight))
         obs.pop(index)
     return prob
 
