@@ -1,3 +1,5 @@
+from medtri.medinode.event.eventlink import EventLink
+from medtri.medinode.inode.constants import EventRelation
 from medtri.medinode.inode import IEvent, IObservation
 from typing import List
 from copy import copy, deepcopy
@@ -20,34 +22,8 @@ class BaseEvent(IEvent):
     self.outcome_events = outcome_events if outcome_events is not None else []
     self.prevalence = prevalence
 
-  def remove_apriori_event(self, event: IEvent):
-    existed_apriori_event_index = self._get_apriori_event_index(event)
-    if existed_apriori_event_index != -1:
-      # Current observations not include this event
-      self.apriori_events.pop(existed_apriori_event_index)
-
-  def remove_outcome_event(self, event: IEvent):
-    existed_outcome_event_index = self._get_outcome_event_index(event)
-    if existed_outcome_event_index != -1:
-      # Current observations not include this event
-      self.apriori_events.pop(existed_outcome_event_index)
-
-  def get_apriori_event(self, event: IEvent):
-    index = self._get_apriori_event_index(event)
-    return self.apriori_events[index] if index != -1 else None
-
   def _get_apriori_event_index(self, event: IEvent) -> int:
     for index, eve in enumerate(self.apriori_events):
-      if event == eve:
-        return index
-    return -1
-
-  def get_outcome_event(self, event: IEvent):
-    index = self._get_outcome_event_index(event)
-    return self.apriori_events[index] if index != -1 else None
-
-  def _get_outcome_event_index(self, event: IEvent) -> int:
-    for index, eve in enumerate(self.outcome_events):
       if event == eve:
         return index
     return -1
@@ -60,6 +36,11 @@ class BaseEvent(IEvent):
     """
     if self == event:
       return True
+    for apriori_link in event.event_links:
+      if apriori_link.link_type == EventRelation.OUTCOME and self.is_outcome_of(
+          apriori_link.to_event
+          ):
+        return True
     for event_outcome in event.outcome_events:
       if self.is_outcome_of(event_outcome):
         return True
@@ -76,6 +57,11 @@ class BaseEvent(IEvent):
     """
     if self == event:
       return True
+    for apriori_link in event.event_links:
+      if apriori_link.link_type == EventRelation.APRIORI and self.is_apriori_of(
+          apriori_link.from_event
+          ):
+        return True
     for event_apriori in event.apriori_events:
       if self.is_apriori_of(event_apriori):
         return True
