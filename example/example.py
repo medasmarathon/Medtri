@@ -30,4 +30,4 @@ patient_condition = patient | [symptom_x_observation, symptom_y_observation]
 
 print(patient.is_event_possible(symptom_y))
 print(disease_A.prevalence_relative_to_observations([symptom_x_observation]))
-print(patient_condition.probability_of(disease_B))
+print(patient_condition.probability_of(disease_A))
