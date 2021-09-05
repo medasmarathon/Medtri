@@ -1,3 +1,5 @@
+from medtri.medinode.event.eventlink import EventLink
+from medtri.medinode.inode.constants import EventRelation
 from medtri.medinode.event.nullevent import NullEvent
 from medtri.medinode.condition import Condition
 from medtri.medinode.inode import IEvent, IHost
@@ -10,6 +12,12 @@ class Host(IHost):
     self.name = name
     self.possible_events = possible_events
     self.__add_null_event()
+
+  def add_event_link(
+      self, link_type: EventRelation, cause: IEvent, target: IEvent, link_value: float
+      ):
+    cause.event_links.append(EventLink(link_type, cause, target, link_value))
+    target.event_links.append(EventLink(link_type, cause, target, link_value))
 
   def get_all_possible_outcomes_of(self, event: IEvent):
     outcome_events = []

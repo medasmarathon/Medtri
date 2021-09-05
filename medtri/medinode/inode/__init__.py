@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from medtri.medinode.inode.constants import EventRelation
 from typing import List, Union
 
 
@@ -7,6 +8,7 @@ class IEvent(ABC):
   apriori_events: List["IEvent"]
   outcome_events: List["IEvent"]
   observations: List["IObservation"]
+  event_links: List["IEventLink"]
 
   @property
   def prevalence(self):
@@ -60,3 +62,10 @@ class IHost(ABC):
 
   def is_event_possible(self, event: IEvent):
     pass
+
+
+class IEventLink(ABC):
+  link_type: EventRelation
+  event_cause: IEvent
+  event_target: IEvent
+  value: float
