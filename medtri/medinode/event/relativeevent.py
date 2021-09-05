@@ -60,17 +60,8 @@ class RelativeEvent(BaseEvent):
       apriori_links.remove(link)
       index = link.from_event.index_in_observations(obs)
       if index is not None:
-        prob = prob * link.from_event.prevalence if (obs[index].is_present
-                                                     ) else prob * (1 - link.from_event.prevalence)
+        prob = prob * link.value if (obs[index].is_present) else prob * (1 - link.value)
         obs.pop(index)
-    # for dependent_event in self.apriori_events:
-    #   # TODO: should check for compound events first here
-    #   apriori_list.remove(dependent_event)
-    #   index = dependent_event.index_in_observations(obs)
-    #   if index is not None:
-    #     prob = prob * dependent_event.prevalence if (obs[index].is_present
-    #                                                  ) else prob * (1 - dependent_event.prevalence)
-    #     obs.pop(index)
     if any(obs) and any(apriori_list):
       """
       Recursively search through apriori events hierachy to calculate relative prevalence
