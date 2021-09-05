@@ -19,7 +19,7 @@ class BaseEvent(IEvent):
     """
     Return:
     -------
-        True if `self` is an outcome of `event` or `self` has any aprioris being outcome of `event`
+        True if `self` is an outcome of `event`
     """
     if self == event:
       return True
@@ -33,7 +33,7 @@ class BaseEvent(IEvent):
     """
     Return:
     -------
-        True if `self` is an apriori to `event` or `self` has any outcomes being apriori of `event`
+        True if `self` is an apriori to `event`
     """
     if self == event:
       return True
@@ -54,3 +54,9 @@ class BaseEvent(IEvent):
       if self == ob.event:
         return index
     return None
+
+  def __rshift__(self, other: IEvent):
+    return (self, other)
+
+  def __lshift__(self, other: IEvent):
+    return (other, self)

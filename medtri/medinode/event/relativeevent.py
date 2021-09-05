@@ -28,22 +28,15 @@ class RelativeEvent(BaseEvent):
   def prevalence_relative_to_observations(self, observations: List[IObservation]) -> float:
     is_self_observed = self.__is_observed_in(observations)
     if is_self_observed is None:
+      # Relative probability * Prevalence = Total prevalence of this event
       return self.relative_probability_of_observations(observations) * self.prevalence
     else:
       return 1 if is_self_observed else 0
 
   def relative_probability_of_observations(self, observations: List[IObservation]) -> float:
-    obs = observations.copy()
-    apriori_links = [
-        link for link in self.event_links.copy() if (link.link_type == EventRelation.APRIORI)
-        ]
     prob = 1
-    for link in apriori_links:
-      # TODO: should check for compound events first here
-      index = link.event_cause.index_in_observations(obs)
-      if index is not None:
-        prob = prob * link.value if (obs[index].is_present) else prob * (1 - link.value)
-        obs.pop(index)
+    prob *= self._add_probs_from_apriori_links(observations)
+    prob += self._add_probs_from_outcome_links(observations)
     return prob
 
   def __is_observed_in(self, observations: List[IObservation]) -> Union[bool, None]:
@@ -54,3 +47,34 @@ class RelativeEvent(BaseEvent):
       return True
     else:
       return False
+
+  def _add_probs_from_apriori_links(self, observations: List[IObservation]) -> float:
+    obs = observations.copy()
+    apriori_links = [
+        link for link in self.event_links.copy()
+        if (link.link_type == EventRelation.APRIORI and link.event_target == self)
+        ]
+    prob = 1
+    for apriori in apriori_links:
+      # TODO: should check for compound events first here
+      index = apriori.event_cause.index_in_observations(obs)
+      if index is not None:
+        prob = (prob * apriori.weight if (obs[index].is_present) else prob * (1 - apriori.weight))
+        obs.pop(index)
+    if len(obs) == len(observations):
+      prob = 0
+    return prob
+
+  def _add_probs_from_outcome_links(self, observations: List[IObservation]) -> float:
+    prob = 0
+    outcome_links = [
+        link for link in self.event_links.copy()
+        if (link.link_type == EventRelation.OUTCOME and link.event_target == self)
+        ]
+    obs = observations.copy()
+    for outcome in outcome_links:
+      index = outcome.event_cause.index_in_observations(obs)
+      if index is not None:
+        obs.pop(index)
+        prob = prob + outcome.weight * outcome.event_cause.prevalence_relative_to_observations(obs)
+    return prob
