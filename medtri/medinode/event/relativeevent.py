@@ -51,7 +51,8 @@ class RelativeEvent(BaseEvent):
   def _add_probs_from_apriori_links(self, observations: List[IObservation]) -> float:
     obs = observations.copy()
     apriori_links = [
-        link for link in self.event_links.copy() if (link.link_type == EventRelation.APRIORI)
+        link for link in self.event_links.copy()
+        if (link.link_type == EventRelation.APRIORI and link.event_target == self)
         ]
     prob = 1
     for apriori in apriori_links:
