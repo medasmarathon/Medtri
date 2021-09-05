@@ -1,4 +1,4 @@
-from medtri.medinode.inode import IObservation
+from medtri.medinode.inode import IEvent, IObservation
 from medtri.constants.constants import incorrect_type_comparison
 from .event import BaseEvent
 
@@ -7,7 +7,7 @@ class Observation(IObservation):
   """
   Observation of an Event
   """
-  def __init__(self, event: BaseEvent, is_present: bool = None) -> None:
+  def __init__(self, event: IEvent, is_present: bool = None) -> None:
     """Observation of an Event
 
     Args:

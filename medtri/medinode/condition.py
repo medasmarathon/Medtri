@@ -1,7 +1,7 @@
 from medtri.medinode.inode import IEvent, IHost, IObservation
 from medtri.medinode.observation import Observation
-from medtri.medinode.event import BaseEvent
 from typing import List
+from copy import copy, deepcopy
 
 
 class Condition:
@@ -16,15 +16,13 @@ class Condition:
         observed_observations.append(obs)
     return observed_observations
 
-  def has_observation_for_event(self, event: BaseEvent):
+  def has_observation_for_event(self, event: IEvent):
     existed_event_observation_index = self.__get_observation_index_for_event(event)
     if existed_event_observation_index == -1:
       return False
     return True
 
-  def update_observation(self, observation: Observation, presence: bool = None):
-    if presence is not None:
-      observation.is_present = presence
+  def update_observation(self, observation: IObservation, presence: bool = None):
     existed_event_observation_index = self.__get_observation_index_for_event(observation.event)
     if existed_event_observation_index == -1:
       # Current observations not include this event
@@ -39,7 +37,7 @@ class Condition:
         return index
     return -1
 
-  def remove_observation(self, observation: Observation):
+  def remove_observation(self, observation: IObservation):
     existed_event_observation_index = self.__get_observation_index_for_event(observation.event)
     if existed_event_observation_index != -1:
       # Current observations not include this event
