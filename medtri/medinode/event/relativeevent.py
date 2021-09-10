@@ -55,11 +55,11 @@ class RelativeEvent(BaseEvent):
         if (link.link_type == EventRelation.APRIORI and link.event_target == self)
         ]
     prob = 1
-    for apriori in apriori_links:
+    for link in apriori_links:
       # TODO: should check for compound events first here
-      index = apriori.event_cause.index_in_observations(obs)
+      index = link.event_cause.index_in_observations(obs)
       if index is not None:
-        prob = (prob * apriori.weight if (obs[index].is_present) else prob * (1 - apriori.weight))
+        prob = (prob * link.weight if (obs[index].is_present) else prob * (1 - link.weight))
         obs.pop(index)
     if len(obs) == len(observations):
       prob = 0
@@ -72,9 +72,9 @@ class RelativeEvent(BaseEvent):
         if (link.link_type == EventRelation.OUTCOME and link.event_target == self)
         ]
     obs = observations.copy()
-    for outcome in outcome_links:
-      index = outcome.event_cause.index_in_observations(obs)
+    for link in outcome_links:
+      index = link.event_cause.index_in_observations(obs)
       if index is not None:
         obs.pop(index)
-        prob = prob + outcome.weight * outcome.event_cause.prevalence_relative_to_observations(obs)
+        prob = prob + link.weight * link.event_cause.prevalence_relative_to_observations(obs)
     return prob
